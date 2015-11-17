@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.thinkmobiles.mysmallcommunity"
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -28,4 +28,5 @@ dependencies {
     compile fileTree(dir: 'libs', include: 'Parse-*.jar')
     compile files('libs/Parse-1.11.0.jar')
     compile files('libs/ParseFacebookUtilsV4-1.10.3.jar')
+    compile 'com.facebook.android:facebook-android-sdk:4.7.0'
 }
