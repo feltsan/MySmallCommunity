@@ -61,11 +61,10 @@ public class LoginFragment extends Fragment {
                             @Override
                             public void onCompleted(JSONObject jsonObject, GraphResponse graphResponse) {
                                 accessToken = AccessToken.getCurrentAccessToken();
-                                //LoginManager.getInstance().logOut();
+
                                 Log.d("DENYSYUK", "JSONObject = " + jsonObject.toString());
 
                                 startActivity(new Intent(getActivity(), MainActivity.class));
-                                // my result JSONObject = {"birthday":"09\/02\/1991","email":"yarukhaka@meta.ua","id":"1030963233580793"}
                             }
                         }
                 );
