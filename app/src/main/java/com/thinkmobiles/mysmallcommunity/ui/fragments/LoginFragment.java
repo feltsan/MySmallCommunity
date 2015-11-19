@@ -1,6 +1,8 @@
 package com.thinkmobiles.mysmallcommunity.ui.fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,25 +22,39 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.thinkmobiles.mysmallcommunity.R;
-import com.thinkmobiles.mysmallcommunity.ui.activities.MainActivity;
+import com.thinkmobiles.mysmallcommunity.ui.activities.LoginActivity;
 
 import org.json.JSONObject;
+
+import java.util.List;
 
 
 /**
  * Created by dreamfire on 17.11.15.
  */
 public class LoginFragment extends Fragment {
+    public static final String PREFERENCE = "prefs";
+    public static final String TOKEN = "token";
+
     private LoginButton loginButton;
     private CallbackManager callbackManager;
     private AccessToken accessToken;
+    private LoginActivity activity;
+    private SharedPreferences mPrefs;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
         super.onCreate(savedInstanceState);
 
-        Log.d("DENYSYUK", "OnCreate");
+        mPrefs = getActivity().getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        activity = (LoginActivity)context;
     }
 
     @Nullable
@@ -46,25 +62,37 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.login_fragment, container, false);
 
-        loginButton = (LoginButton) v.findViewById(R.id.login_button);
+        findUI(v);
+        setLoginButton();
+
+        return v;
+    }
+
+    private void findUI(View _v){
+        loginButton = (LoginButton) _v.findViewById(R.id.login_button);
+    }
+
+    private void setLoginButton(){
         loginButton.setReadPermissions("public_profile, email");
         loginButton.setFragment(this);
 
         callbackManager = CallbackManager.Factory.create();
 
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        if(isLoggined()){
+            activity.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.frameContainer, new RegistrationStepsFragment()).commit();
+        }
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Log.d("DENYSYUK", "onSuccess");
                 final GraphRequest request = GraphRequest.newMeRequest(
                         loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
                             @Override
                             public void onCompleted(JSONObject jsonObject, GraphResponse graphResponse) {
                                 accessToken = AccessToken.getCurrentAccessToken();
-
-                                Log.d("DENYSYUK", "JSONObject = " + jsonObject.toString());
-
-                                startActivity(new Intent(getActivity(), MainActivity.class));
+                                setToken(accessToken);
+                                activity.getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.frameContainer, new RegistrationStepsFragment()).commit();
                             }
                         }
                 );
@@ -83,11 +111,20 @@ public class LoginFragment extends Fragment {
 
             @Override
             public void onError(FacebookException error) {
-                Log.d("DENYSYUK", "onError");
+                Log.d("DENYSYUK", "onError " + error.toString());
             }
         });
 
-        return v;
+    }
+
+    private void setToken(AccessToken _token) {
+        SharedPreferences.Editor edit = mPrefs.edit();
+        edit.putString(TOKEN, _token.toString());
+        edit.apply();
+    }
+
+    private boolean isLoggined(){
+        return mPrefs.contains(TOKEN);
     }
 
     @Override
