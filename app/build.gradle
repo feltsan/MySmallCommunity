@@ -29,4 +29,13 @@ dependencies {
     compile files('libs/Parse-1.11.0.jar')
     compile files('libs/ParseFacebookUtilsV4-1.10.3.jar')
     compile 'com.facebook.android:facebook-android-sdk:4.7.0'
+
+    // internet connection
+    compile 'com.squareup.retrofit:retrofit:2.0.0-beta1'
+    compile 'com.squareup.okhttp:okhttp:2.5.0'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
+    compile 'com.squareup.retrofit:converter-gson:2.0.0-beta1'
+
+    // image processing
+    compile 'de.hdodenhof:circleimageview:2.0.0'
 }
