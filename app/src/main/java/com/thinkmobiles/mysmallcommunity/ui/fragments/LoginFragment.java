@@ -1,6 +1,8 @@
 package com.thinkmobiles.mysmallcommunity.ui.fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,6 +22,9 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.thinkmobiles.mysmallcommunity.R;
+import com.thinkmobiles.mysmallcommunity.base.BaseFragment;
+import com.thinkmobiles.mysmallcommunity.global.Constants;
+import com.thinkmobiles.mysmallcommunity.ui.activities.LoginActivity;
 import com.thinkmobiles.mysmallcommunity.ui.activities.MainActivity;
 
 import org.json.JSONObject;
@@ -29,36 +34,34 @@ import org.json.JSONObject;
  * Created by dreamfire on 17.11.15.
  */
 public class LoginFragment extends BaseFragment {
-    public static final String PREFERENCE = "prefs";
-    public static final String TOKEN = "token";
+
     private LoginButton loginButton;
     private CallbackManager callbackManager;
     private AccessToken accessToken;
-    private LoginActivity activity;
     private SharedPreferences mPrefs;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.login_fragment);
 
-        mPrefs = getActivity().getSharedPreferences(PREFERENCE, Context.MODE_PRIVATE);
+        mPrefs = getActivity().getSharedPreferences(Constants.PREFERENCE, Context.MODE_PRIVATE);
 
     }
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.login_fragment, container, false);
+        View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        findUI(v);
+        findUI();
         setLoginButton();
 
-        return v;
+        return view;
     }
 
-    private void findUI(View _v){
-        loginButton = (LoginButton) _v.findViewById(R.id.login_button);
+    private void findUI(){
+        loginButton           = $(R.id.login_button);
     }
 
     private void setLoginButton(){
@@ -67,9 +70,8 @@ public class LoginFragment extends BaseFragment {
 
         callbackManager = CallbackManager.Factory.create();
 
-        if(isLoggined()){
-            activity.getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.frameContainer, new RegistrationStepsFragment()).commit();
+        if(false){
+            mActivity.getFragmentNavigator().replaceFragment(new RegistrationStepsFragment());
         }
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -109,12 +111,12 @@ public class LoginFragment extends BaseFragment {
 
     private void setToken(AccessToken _token) {
         SharedPreferences.Editor edit = mPrefs.edit();
-        edit.putString(TOKEN, _token.toString());
+        edit.putString(Constants.TOKEN, _token.toString());
         edit.apply();
     }
 
     private boolean isLoggined(){
-        return mPrefs.contains(TOKEN);
+        return mPrefs.contains(Constants.TOKEN);
     }
 
     @Override

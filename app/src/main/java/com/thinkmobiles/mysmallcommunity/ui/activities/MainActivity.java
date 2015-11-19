@@ -1,5 +1,6 @@
 package com.thinkmobiles.mysmallcommunity.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,37 +13,45 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.facebook.login.LoginManager;
 import com.thinkmobiles.mysmallcommunity.R;
+import com.thinkmobiles.mysmallcommunity.base.BaseActivity;
+import com.thinkmobiles.mysmallcommunity.global.Constants;
 
 import java.util.HashMap;
 import java.util.List;
 
-public class MainActivity extends BaseActivity {
-    private String[] mItemMenu = {"User name", "Stories", "Messages", "Gallery",
-            "Event", "People", "Group", "Directories", "Settings", "Log out"};
+public class MainActivity extends BaseActivity implements AdapterView.OnItemClickListener {
+
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         findUI();
+        setSupportActionBar(toolbar);
+        setListener();
 
         mDrawerList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                mItemMenu));
-        mDrawerList.setOnItemClickListener(this);
+                Constants.mItemMenu));
     }
 
     private void findUI(){
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        toolbar              = $(R.id.toolbar);
+        mDrawerLayout        = $(R.id.drawer_layout);
+        mDrawerList          = $(R.id.left_drawer);
+    }
+
+    private void setListener(){
+        mDrawerList.setOnItemClickListener(this);
     }
 
     @Override
@@ -74,7 +83,6 @@ public class MainActivity extends BaseActivity {
                 LoginManager.getInstance().logOut();
                 startActivity(new Intent(this, LoginActivity.class));
                 finish();
-
                 break;
         }
     }

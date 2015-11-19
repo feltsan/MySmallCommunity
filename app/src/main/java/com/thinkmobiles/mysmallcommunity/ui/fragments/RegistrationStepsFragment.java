@@ -23,6 +23,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.thinkmobiles.mysmallcommunity.R;
+import com.thinkmobiles.mysmallcommunity.base.BaseFragment;
 import com.thinkmobiles.mysmallcommunity.models.Community;
 import com.thinkmobiles.mysmallcommunity.models.Emirates;
 import com.thinkmobiles.mysmallcommunity.models.Interes;
@@ -34,46 +35,47 @@ import java.util.List;
 /**
  * Created by dreamfire on 18.11.15.
  */
-public class RegistrationStepsFragment extends Fragment implements View.OnClickListener {
-    private Spinner spinnerEmirate;
-    private Spinner spinnerCommunity;
-    private String value;
+public class RegistrationStepsFragment extends BaseFragment implements View.OnClickListener {
+
+    private Spinner spinnerEmirate, spinnerCommunity, mFamilySpinner;
     private List<Emirates> emirList;
     private List<Community> comList;
     private List<Interes> interesList;
     private Button mNextBtn;
-    private LinearLayout mRegionLayout;
-    private Spinner mFamilySpinner;
-    private LinearLayout mInterestlayout;
+    private LinearLayout mRegionLayout,mInterestlayout;
     private int steps=0;
     private GridLayout gridLayout;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.registration_steps_fragment, container, false);
-
-        findUI(v);
-        setSpinner();
-        setListener();
-
-        getAllInteres();
-
-        return v;
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.registration_steps_fragment);
     }
 
-    private void findUI(View _v){
-        spinnerEmirate = (Spinner) _v.findViewById(R.id.spinnerEmirate);
-        spinnerCommunity = (Spinner) _v.findViewById(R.id.spinnerCommunity);
-        mFamilySpinner = (Spinner) _v.findViewById(R.id.familySpinner);
-        mRegionLayout = (LinearLayout) _v.findViewById(R.id.regionLayout);
-        mNextBtn = (Button) _v.findViewById(R.id.nextbtn);
-        mInterestlayout = (LinearLayout) _v.findViewById(R.id.interestLayout);
-        gridLayout = (GridLayout) _v.findViewById(R.id.gridLayout);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view =  super.onCreateView(inflater, container, savedInstanceState);
+
+        findUI();
+        setSpinner();
+        setListener();
+        getAllInteres();
 
         comList = new ArrayList<>();
         emirList = new ArrayList<>();
         interesList = new ArrayList<>();
+
+        return view;
+    }
+
+    private void findUI(){
+        spinnerEmirate               = $(R.id.spinnerEmirate);
+        spinnerCommunity             = $(R.id.spinnerCommunity);
+        mFamilySpinner               = $(R.id.familySpinner);
+        mRegionLayout                = $(R.id.regionLayout);
+        mNextBtn                     = $(R.id.nextbtn);
+        mInterestlayout              = $(R.id.interestLayout);
+        gridLayout                   = $(R.id.gridLayout);
     }
 
     private void addInterest(){
