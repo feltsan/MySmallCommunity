@@ -5,21 +5,19 @@ import android.support.v7.app.AppCompatActivity;
 import com.facebook.FacebookSdk;
 import com.facebook.login.widget.LoginButton;
 import com.thinkmobiles.mysmallcommunity.R;
+import com.thinkmobiles.mysmallcommunity.base.BaseActivity;
 import com.thinkmobiles.mysmallcommunity.ui.fragments.LoginFragment;
 
 /**
  * Created by dreamfire on 17.11.15.
  */
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_login);
-
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frameContainer, new LoginFragment()).commit();
+        getFragmentNavigator().replaceFragment(new LoginFragment());
 
     }
 }
