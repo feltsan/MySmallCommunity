@@ -143,6 +143,7 @@ public class RegistrationStepsActivity extends BaseActivity implements View.OnCl
                 if (imagePager.getCurrentItem() == INTERES_SCREEN) {
                     mManager.saveUser(User.newInstance());
                     startActivity(new Intent(RegistrationStepsActivity.this, MainActivity.class));
+                    finish();
                 }
                 imagePager.setCurrentItem(imagePager.getCurrentItem() + 1);
                 break;

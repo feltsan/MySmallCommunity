@@ -90,7 +90,7 @@ public class ParseManager {
             @Override
             public void done(Object o, ParseException e) {
                 if(o != null) {
-                    Log.d("DENYSYUK", "User saved");
+                    Log.d("DENYSYUK", "User saved = " + o.toString());
                 }
                 if(e != null)
                     Log.d("DENYSYUK", "User save error: " + e.toString());
