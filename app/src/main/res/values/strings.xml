@@ -1,16 +1,28 @@
 <resources>
+
+    <!--APP -->
     <string name="app_name">My small community</string>
     <string name="action_settings">Settings</string>
     <string name="facebook_app_id">1711696742396736</string>
+
+    <!-- Registration -->
 
     <string name="sign_in">Sign in</string>
     <string name="family_status">Family status</string>
     <string name="community">Community</string>
     <string name="interest">Interest</string>
-    <string name="btn_next">Next</string>
+    <string name="btn_next">NEXT</string>
+    <string name="complete_registration">Complete registration</string>
+    <string name="btn_back">BACK</string>
+    <string name="btn_finish">FINISH</string>
+    <string name="maried">Maried</string>
+    <string name="family">Family</string>
+    <string name="single">Single</string>
 
     <string-array name="family_status">
         <item>Married</item>
         <item>Single</item>
     </string-array>
+    
+    
 </resources>

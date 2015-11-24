@@ -26,6 +26,7 @@ import com.thinkmobiles.mysmallcommunity.base.BaseFragment;
 import com.thinkmobiles.mysmallcommunity.global.Constants;
 import com.thinkmobiles.mysmallcommunity.ui.activities.LoginActivity;
 import com.thinkmobiles.mysmallcommunity.ui.activities.MainActivity;
+import com.thinkmobiles.mysmallcommunity.ui.activities.RegistrationStepsActivity;
 
 import org.json.JSONObject;
 
@@ -84,7 +85,7 @@ public class LoginFragment extends BaseFragment {
 
                                 Log.d("DENYSYUK", "JSONObject = " + jsonObject.toString());
 
-                                startActivity(new Intent(getActivity(), MainActivity.class));
+                                startActivity(new Intent(getActivity(), RegistrationStepsActivity.class));
                             }
                         }
                 );

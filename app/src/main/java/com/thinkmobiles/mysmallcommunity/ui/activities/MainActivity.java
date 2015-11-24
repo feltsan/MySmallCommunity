@@ -1,6 +1,7 @@
 package com.thinkmobiles.mysmallcommunity.ui.activities;
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,11 +21,20 @@ import android.widget.ListView;
 
 import com.facebook.login.LoginManager;
 import com.thinkmobiles.mysmallcommunity.R;
+import com.thinkmobiles.mysmallcommunity.api.API;
+import com.thinkmobiles.mysmallcommunity.api.RetrofitAdapter;
 import com.thinkmobiles.mysmallcommunity.base.BaseActivity;
 import com.thinkmobiles.mysmallcommunity.global.Constants;
 
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
 
 public class MainActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 
@@ -42,6 +53,8 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
         mDrawerList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
                 Constants.mItemMenu));
+       getPost();
+
     }
 
     private void findUI(){
@@ -85,5 +98,10 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
                 finish();
                 break;
         }
+    }
+
+    public void getPost(){
+        Log.e("MOCK", API.getPosts().toString());
+
     }
 }
