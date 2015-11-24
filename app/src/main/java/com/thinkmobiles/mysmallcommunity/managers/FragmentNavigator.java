@@ -3,8 +3,8 @@ package com.thinkmobiles.mysmallcommunity.managers;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
-import com.thinkmobiles.mysmallcommunity.R;
 import com.thinkmobiles.mysmallcommunity.base.BaseFragment;
+import com.thinkmobiles.mysmallcommunity.R;
 
 /**
  * Created by feltsan on 19.11.15.

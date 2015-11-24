@@ -15,6 +15,7 @@ import com.parse.ParseQuery;
 import com.thinkmobiles.mysmallcommunity.R;
 import com.thinkmobiles.mysmallcommunity.base.BaseFragment;
 import com.thinkmobiles.mysmallcommunity.models.Interes;
+import com.thinkmobiles.mysmallcommunity.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,12 +26,17 @@ import java.util.List;
 public class InteresFragment extends BaseFragment implements View.OnClickListener{
     private GridLayout gridLayout;
     private List<Interes> interesList;
+    private List<String> userInteres;
+    private User mUser;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_interest);
         interesList = new ArrayList<>();
+        userInteres = new ArrayList<>();
+
+        mUser = User.newInstance();
     }
 
     @Override
@@ -62,6 +68,13 @@ public class InteresFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onClick(View v) {
         v.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        if(userInteres.contains(v.getTag().toString())){
+            userInteres.remove(v.getTag().toString());
+        } else {
+            userInteres.add(v.getTag().toString());
+        }
+
+        mUser.setUserInteres(userInteres);
     }
 
 

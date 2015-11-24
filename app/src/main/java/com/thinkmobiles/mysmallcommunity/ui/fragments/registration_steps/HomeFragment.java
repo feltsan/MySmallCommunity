@@ -15,9 +15,12 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.thinkmobiles.mysmallcommunity.R;
+import com.thinkmobiles.mysmallcommunity.adapters.SpinnerHintAdapter;
 import com.thinkmobiles.mysmallcommunity.base.BaseFragment;
 import com.thinkmobiles.mysmallcommunity.models.Community;
 import com.thinkmobiles.mysmallcommunity.models.Emirates;
+import com.thinkmobiles.mysmallcommunity.models.SpinnerItem;
+import com.thinkmobiles.mysmallcommunity.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +29,11 @@ import java.util.List;
  * Created by feltsan on 23.11.15.
  */
 public class HomeFragment extends BaseFragment {
-    private Spinner spinnerEmirate, spinnerCommunity;
-    private List<Emirates> emirList;
-    private List<Community> comList;
+    private Spinner spinnerEmirate, spinnerCommunity, spinnerArea;
+    private List<SpinnerItem> emirList;
+    private List<SpinnerItem> comList;
+    private List<SpinnerItem> areaList;
+    private User mUser;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,84 +42,151 @@ public class HomeFragment extends BaseFragment {
 
         comList = new ArrayList<>();
         emirList = new ArrayList<>();
+        areaList = new ArrayList<>();
+        mUser = User.newInstance();
 
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
         findUI();
-        setSpinner();
+        setEmirateSpinner();
         return view;
     }
 
     private void findUI() {
         spinnerEmirate = $(R.id.spinnerEmirate);
         spinnerCommunity = $(R.id.spinnerCommunity);
+        spinnerArea = $(R.id.spinnerArea);
     }
 
-    private void setSpinner() {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Emirates");
+
+    private void setEmirateSpinner(){
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Emirates");
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
-                Log.d("DENYSYUK", "" + list.size());
-                for (ParseObject s : list) {
-                    Emirates emirates = new Emirates();
-                    emirates.setId(s.getObjectId());
-                    emirates.setName(s.get("name").toString());
+                if (list != null) {
+                    for (ParseObject o : list) {
+                        SpinnerItem item = new SpinnerItem();
+                        item.setId(o.getObjectId());
+                        item.setName(o.getString("name"));
 
-                    emirList.add(emirates);
+                        emirList.add(item);
+                    }
 
+                    SpinnerItem item = new SpinnerItem();
+                    item.setName("Choose Emirates");
+                    emirList.add(item);
+
+                    SpinnerHintAdapter adapter = new SpinnerHintAdapter(getActivity(), emirList);
+                    spinnerEmirate.setAdapter(adapter);
+                    spinnerEmirate.setSelection(emirList.size() - 1);
                 }
-                spinnerEmirate.setAdapter(new ArrayAdapter<Emirates>(getActivity(),
-                        android.R.layout.simple_list_item_1, emirList));
-
-                spinnerEmirate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        Log.d("DENYSYUK", emirList.get(position).getName());
-                        selectEmirate(emirList.get(position).getId());
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
             }
         });
 
-        ParseQuery<ParseObject> query1 = ParseQuery.getQuery("Community");
-        query1.findInBackground(new FindCallback<ParseObject>() {
+        spinnerEmirate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String itemId = emirList.get(position).getId();
+                if (itemId != null) {
+                    setCommunitySpinner(itemId);
+                    mUser.setEmirate(itemId);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void setCommunitySpinner(String _id) {
+        comList = new ArrayList<>();
+
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Community");
+        query.whereEqualTo("idEmirates", _id);
+        query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
                 for (ParseObject o : list) {
-                    Community community = new Community();
-                    community.setId(o.getObjectId());
-                    community.setIdEmirates(o.get("idEmirates").toString());
-                    community.setName(o.get("name").toString());
+                    SpinnerItem item = new SpinnerItem();
+                    item.setId(o.getObjectId());
+                    item.setName(o.getString("name"));
 
-                    comList.add(community);
+                    comList.add(item);
                 }
-                setCommunitySpinner(comList);
+                SpinnerItem item = new SpinnerItem();
+                item.setName("Choose community");
+                comList.add(item);
+
+                SpinnerHintAdapter commAdapter = new SpinnerHintAdapter(getActivity(), comList);
+                spinnerCommunity.setAdapter(commAdapter);
+                spinnerCommunity.setSelection(comList.size() - 1);
+            }
+        });
+
+        spinnerCommunity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String itemId = comList.get(position).getId();
+                if(itemId != null) {
+                    setAreaSpinner(itemId);
+                    mUser.setCommunity(itemId);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
     }
 
-    private void selectEmirate(String id) {
-        List<Community> list = new ArrayList<>();
-        for (Community c : comList) {
-            if (id.equals(c.getIdEmirates())) {
-                list.add(c);
+    private void setAreaSpinner(String _id){
+        areaList = new ArrayList<>();
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("District");
+        query.whereEqualTo("idCommunity", _id);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+                for (ParseObject o : list) {
+                    SpinnerItem item = new SpinnerItem();
+                    item.setId(o.getObjectId());
+                    item.setName(o.getString("name"));
+
+                    areaList.add(item);
+                }
+
+                SpinnerItem item = new SpinnerItem();
+                item.setName("Choose area");
+                areaList.add(item);
+
+                SpinnerHintAdapter areaAdapter = new SpinnerHintAdapter(getActivity(), areaList);
+                spinnerArea.setAdapter(areaAdapter);
+                spinnerArea.setSelection(areaList.size() - 1);
             }
-        }
-        setCommunitySpinner(list);
+        });
+
+        spinnerArea.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String itemId = areaList.get(position).getId();
+                if(itemId != null){
+                    mUser.setArea(itemId);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
 
-    private void setCommunitySpinner(List<Community> list) {
-        spinnerCommunity.setAdapter(new ArrayAdapter<Community>(getActivity(),
-                android.R.layout.simple_list_item_1, list));
-    }
 }

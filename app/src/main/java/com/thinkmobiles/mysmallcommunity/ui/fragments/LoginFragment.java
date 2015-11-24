@@ -21,33 +21,37 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.thinkmobiles.mysmallcommunity.R;
 import com.thinkmobiles.mysmallcommunity.base.BaseFragment;
 import com.thinkmobiles.mysmallcommunity.global.Constants;
-import com.thinkmobiles.mysmallcommunity.ui.activities.LoginActivity;
+import com.thinkmobiles.mysmallcommunity.interfaces.Saveiface;
+import com.thinkmobiles.mysmallcommunity.managers.ParseManager;
+import com.thinkmobiles.mysmallcommunity.models.User;
 import com.thinkmobiles.mysmallcommunity.ui.activities.MainActivity;
 import com.thinkmobiles.mysmallcommunity.ui.activities.RegistrationStepsActivity;
+import com.thinkmobiles.mysmallcommunity.R;
+import com.thinkmobiles.mysmallcommunity.ui.fragments.registration_steps.HomeFragment;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 
 /**
  * Created by dreamfire on 17.11.15.
  */
-public class LoginFragment extends BaseFragment {
-
+public class LoginFragment extends BaseFragment implements Saveiface {
     private LoginButton loginButton;
     private CallbackManager callbackManager;
-    private AccessToken accessToken;
-    private SharedPreferences mPrefs;
+    private ParseManager mManager;
+    private User mUser;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_fragment);
 
-        mPrefs = getActivity().getSharedPreferences(Constants.PREFERENCE, Context.MODE_PRIVATE);
+        mUser = User.newInstance();
+        mManager = ParseManager.newInstance(getActivity());
+        mManager.setIface(this);
 
     }
 
@@ -71,9 +75,6 @@ public class LoginFragment extends BaseFragment {
 
         callbackManager = CallbackManager.Factory.create();
 
-        if(false){
-            mActivity.getFragmentNavigator().replaceFragment(new RegistrationStepsFragment());
-        }
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -81,11 +82,21 @@ public class LoginFragment extends BaseFragment {
                         loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
                             @Override
                             public void onCompleted(JSONObject jsonObject, GraphResponse graphResponse) {
-                                accessToken = AccessToken.getCurrentAccessToken();
+                                String name = null;
+                                String[] names = null;
+                                try{
+                                    name = jsonObject.getString("name");
+                                    names = name.split(" ");
 
-                                Log.d("DENYSYUK", "JSONObject = " + jsonObject.toString());
+                                    mUser.setUserFbId(jsonObject.getString("id"));
+                                    mUser.setFirstName(names[0]);
+                                    mUser.setLastName(names[1]);
+                                    mUser.setEmail(jsonObject.getString("email"));
 
-                                startActivity(new Intent(getActivity(), RegistrationStepsActivity.class));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                mManager.isUserRegister(mUser.getUserFbId());
                             }
                         }
                 );
@@ -104,26 +115,24 @@ public class LoginFragment extends BaseFragment {
 
             @Override
             public void onError(FacebookException error) {
-                Log.d("DENYSYUK", "onError " + error.toString());
             }
         });
 
-    }
-
-    private void setToken(AccessToken _token) {
-        SharedPreferences.Editor edit = mPrefs.edit();
-        edit.putString(Constants.TOKEN, _token.toString());
-        edit.apply();
-    }
-
-    private boolean isLoggined(){
-        return mPrefs.contains(Constants.TOKEN);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
-        Log.d("DENYSYUK", "Result");
+    }
+
+    @Override
+    public void save(boolean b) {
+        if(!b) {
+            startActivity(new Intent(getActivity(), RegistrationStepsActivity.class));
+        } else {
+            startActivity(new Intent(getActivity(), MainActivity.class));
+        }
+        getActivity().finish();
     }
 }

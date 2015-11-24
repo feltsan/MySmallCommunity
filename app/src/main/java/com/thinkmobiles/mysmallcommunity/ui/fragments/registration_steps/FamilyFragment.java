@@ -9,17 +9,21 @@ import android.view.ViewGroup;
 
 import com.thinkmobiles.mysmallcommunity.R;
 import com.thinkmobiles.mysmallcommunity.base.BaseFragment;
+import com.thinkmobiles.mysmallcommunity.models.User;
 
 /**
  * Created by feltsan on 23.11.15.
  */
 public class FamilyFragment extends BaseFragment implements View.OnClickListener{
     private AppCompatRadioButton family, maried, single;
+    private User mUser;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_family_steps);
+
+        mUser = User.newInstance();
     }
 
     @Override
@@ -54,16 +58,19 @@ public class FamilyFragment extends BaseFragment implements View.OnClickListener
             case R.id.rb_family_FFS:
                 setAllUncheck();
                 family.setChecked(true);
+                mUser.setFamilyStatus("family");
                 break;
 
             case R.id.rb_maried_FFS:
                 setAllUncheck();
                 maried.setChecked(true);
+                mUser.setFamilyStatus("maried");
                 break;
 
             case R.id.rb_single_FFS:
                 setAllUncheck();
                 single.setChecked(true);
+                mUser.setFamilyStatus("single");
                 break;
 
         }

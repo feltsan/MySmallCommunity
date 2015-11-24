@@ -19,6 +19,9 @@
     <string name="family">Family</string>
     <string name="single">Single</string>
 
+    <string name="welcome">Welcome</string>
+    <string name="login_text">Bla bla bla</string>
+
     <string-array name="family_status">
         <item>Married</item>
         <item>Single</item>

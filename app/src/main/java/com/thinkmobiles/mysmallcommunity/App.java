@@ -2,6 +2,7 @@ package com.thinkmobiles.mysmallcommunity;
 
 import android.app.Application;
 
+import com.facebook.FacebookSdk;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
@@ -23,5 +24,6 @@ public class App extends Application {
 
     private void initParse(){
         Parse.initialize(this, App.PARSE_ID, App.PARSE_KEY);
+        FacebookSdk.sdkInitialize(getApplicationContext());
     }
 }

@@ -15,11 +15,18 @@
         <Spinner
             android:id="@+id/spinnerEmirate"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:padding="16dp"/>
         <Spinner
             android:id="@+id/spinnerCommunity"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:padding="16dp"/>
+        <Spinner
+            android:id="@+id/spinnerArea"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"/>
 
     </LinearLayout>
 

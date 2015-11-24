@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.thinkmobiles.mysmallcommunity.R;
 import com.thinkmobiles.mysmallcommunity.adapters.RegistrationPagerAdapter;
 import com.thinkmobiles.mysmallcommunity.base.BaseActivity;
+import com.thinkmobiles.mysmallcommunity.managers.ParseManager;
+import com.thinkmobiles.mysmallcommunity.models.User;
 import com.thinkmobiles.mysmallcommunity.ui.custom_views.CirclePageIndicator;
 import com.thinkmobiles.mysmallcommunity.ui.fragments.LoginFragment;
 import com.thinkmobiles.mysmallcommunity.ui.fragments.registration_steps.FamilyFragment;
@@ -36,6 +38,7 @@ public class RegistrationStepsActivity extends BaseActivity implements View.OnCl
     private TextView backButton;
     private TextView nextButton;
     private AppCompatRadioButton home, family, interest;
+    private ParseManager mManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +58,8 @@ public class RegistrationStepsActivity extends BaseActivity implements View.OnCl
         home = $(R.id.region_img);
         family = $(R.id.family_img);
         interest = $(R.id.interes_img);
+
+        mManager = ParseManager.newInstance(this);
     }
 
     private void setListener() {
@@ -135,8 +140,10 @@ public class RegistrationStepsActivity extends BaseActivity implements View.OnCl
                 imagePager.setCurrentItem(pos);
                 break;
             case R.id.tv_next_RS:
-                if (imagePager.getCurrentItem() == INTERES_SCREEN)
+                if (imagePager.getCurrentItem() == INTERES_SCREEN) {
+                    mManager.saveUser(User.newInstance());
                     startActivity(new Intent(RegistrationStepsActivity.this, MainActivity.class));
+                }
                 imagePager.setCurrentItem(imagePager.getCurrentItem() + 1);
                 break;
         }
