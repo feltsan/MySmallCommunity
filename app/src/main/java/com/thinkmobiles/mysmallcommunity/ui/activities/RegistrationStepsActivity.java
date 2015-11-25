@@ -16,6 +16,7 @@ import com.thinkmobiles.mysmallcommunity.managers.ParseManager;
 import com.thinkmobiles.mysmallcommunity.models.User;
 import com.thinkmobiles.mysmallcommunity.ui.custom_views.CirclePageIndicator;
 import com.thinkmobiles.mysmallcommunity.ui.fragments.LoginFragment;
+import com.thinkmobiles.mysmallcommunity.ui.fragments.registration_steps.BlankFragment;
 import com.thinkmobiles.mysmallcommunity.ui.fragments.registration_steps.FamilyFragment;
 import com.thinkmobiles.mysmallcommunity.ui.fragments.registration_steps.HomeFragment;
 import com.thinkmobiles.mysmallcommunity.ui.fragments.registration_steps.InteresFragment;
@@ -25,7 +26,7 @@ import java.util.ArrayList;
 /**
  * Created by feltsan on 23.11.15.
  */
-public class RegistrationStepsActivity extends BaseActivity implements View.OnClickListener {
+public class RegistrationStepsActivity extends BaseActivity implements View.OnClickListener, View.OnTouchListener {
 
     private final static int FB_SCREEN = 0;
     private final static int HOME_SCREEN = 1;
@@ -51,31 +52,27 @@ public class RegistrationStepsActivity extends BaseActivity implements View.OnCl
     }
 
     private void findIU() {
-        imagePager = $(R.id.vpFragmentPager_RS);
-        circlePageIndicator = $(R.id.cpiIndicator_RS);
-        backButton = $(R.id.tv_back_RS);
-        nextButton = $(R.id.tv_next_RS);
-        home = $(R.id.region_img);
-        family = $(R.id.family_img);
-        interest = $(R.id.interes_img);
-
-        mManager = ParseManager.newInstance(this);
+        imagePager              = $(R.id.vpFragmentPager_RS);
+        circlePageIndicator     = $(R.id.cpiIndicator_RS);
+        backButton              = $(R.id.tv_back_RS);
+        nextButton              = $(R.id.tv_next_RS);
+        home                    = $(R.id.region_img);
+        family                  = $(R.id.family_img);
+        interest                = $(R.id.interes_img);
+        mManager                = ParseManager.newInstance(this);
     }
 
     private void setListener() {
-        backButton.setOnClickListener(this);
+        family.setOnTouchListener(this);
+        home.setOnTouchListener(this);
+        interest.setOnTouchListener(this);
         nextButton.setOnClickListener(this);
-        imagePager.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        });
+        imagePager.setOnTouchListener(this);
     }
 
     private void initImagePager() {
         ArrayList<Fragment> fragments = new ArrayList<Fragment>();
-        fragments.add(FB_SCREEN, new LoginFragment());
+        fragments.add(FB_SCREEN, new BlankFragment());
         fragments.add(HOME_SCREEN, new HomeFragment());
         fragments.add(FAMILY_SCREEN, new FamilyFragment());
         fragments.add(INTERES_SCREEN, new InteresFragment());
@@ -85,7 +82,7 @@ public class RegistrationStepsActivity extends BaseActivity implements View.OnCl
         imagePager.setCurrentItem(1);
         backButton.setVisibility(View.INVISIBLE);
         circlePageIndicator.setViewPager(imagePager);
-
+        circlePageIndicator.setOnTouchListener(this);
     }
 
     void initImagePagerListener() {
@@ -99,13 +96,11 @@ public class RegistrationStepsActivity extends BaseActivity implements View.OnCl
             public void onPageSelected(int position) {
                 switch (position) {
                     case HOME_SCREEN:
-                        backButton.setVisibility(View.GONE);
-
                         setAllUncheck();
                         home.setChecked(true);
                         break;
                     case FAMILY_SCREEN:
-                        backButton.setVisibility(View.VISIBLE);
+                        enableBackButton();
                         nextButton.setText(getResources().getString(R.string.btn_next));
                         setAllUncheck();
                         family.setChecked(true);
@@ -134,20 +129,14 @@ public class RegistrationStepsActivity extends BaseActivity implements View.OnCl
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_back_RS:
-                int pos = (imagePager.getCurrentItem() == 1) ? 1 : imagePager.getCurrentItem() - 1;
-                imagePager.setCurrentItem(pos);
-                break;
-            case R.id.tv_next_RS:
-                if (imagePager.getCurrentItem() == INTERES_SCREEN) {
-                    mManager.saveUser(User.newInstance());
-                    startActivity(new Intent(RegistrationStepsActivity.this, MainActivity.class));
-                    finish();
-                }
-                imagePager.setCurrentItem(imagePager.getCurrentItem() + 1);
-                break;
+
+        if (imagePager.getCurrentItem() == INTERES_SCREEN) {
+            mManager.saveUser(User.newInstance());
+            startActivity(new Intent(RegistrationStepsActivity.this, MainActivity.class));
+            finish();
         }
+
+        imagePager.setCurrentItem(imagePager.getCurrentItem() + 1);
 
     }
 
@@ -155,5 +144,27 @@ public class RegistrationStepsActivity extends BaseActivity implements View.OnCl
         home.setChecked(false);
         family.setChecked(false);
         interest.setChecked(false);
+    }
+
+    private void enableBackButton(){
+        backButton.setVisibility(View.VISIBLE);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(imagePager.getCurrentItem()== FAMILY_SCREEN)
+                    disableBackButton();
+                imagePager.setCurrentItem(imagePager.getCurrentItem() -1);
+            }
+        });
+    }
+
+    private void disableBackButton(){
+        backButton.setVisibility(View.INVISIBLE);
+        backButton.setOnClickListener(null);
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        return true;
     }
 }

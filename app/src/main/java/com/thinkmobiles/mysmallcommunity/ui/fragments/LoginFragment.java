@@ -128,7 +128,7 @@ public class LoginFragment extends BaseFragment implements Saveiface {
 
     @Override
     public void save(boolean b) {
-        if(!b) {
+        if(true) {
             startActivity(new Intent(getActivity(), RegistrationStepsActivity.class));
         } else {
             startActivity(new Intent(getActivity(), MainActivity.class));

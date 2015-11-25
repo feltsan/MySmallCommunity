@@ -56,20 +56,14 @@ public class FamilyFragment extends BaseFragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.rb_family_FFS:
-                setAllUncheck();
-                family.setChecked(true);
                 mUser.setFamilyStatus("family");
                 break;
 
             case R.id.rb_maried_FFS:
-                setAllUncheck();
-                maried.setChecked(true);
                 mUser.setFamilyStatus("maried");
                 break;
 
             case R.id.rb_single_FFS:
-                setAllUncheck();
-                single.setChecked(true);
                 mUser.setFamilyStatus("single");
                 break;
 

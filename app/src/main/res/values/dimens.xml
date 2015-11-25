@@ -8,6 +8,7 @@
     <dimen name="txt_size_14">14sp</dimen>
     <dimen name="txt_size_15">15sp</dimen>
     <dimen name="txt_size_16">16sp</dimen>
+    <dimen name="txt_size_18">18sp</dimen>
     <dimen name="txt_size_20">20sp</dimen>
     <dimen name="txt_size_34">34sp</dimen>
     <dimen name="half_padding">4dp</dimen>
@@ -15,4 +16,6 @@
 
     <!-- Registration steps. -->
     <dimen name="btn_steps_size">40dp</dimen>
+    <dimen name="btn_navig_padding">12dp</dimen>
+    <dimen name="navig_padding">16dp</dimen>
 </resources>

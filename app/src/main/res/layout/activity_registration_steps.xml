@@ -106,7 +106,7 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/separateView"
         android:layout_below="@+id/layoutNum"
-        android:elevation="1dp" />
+       />
 
     <View
         android:id="@+id/separateView"
@@ -123,8 +123,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:padding="16dp">
+        android:gravity="center">
 
         <TextView
             android:id="@+id/tv_back_RS"
@@ -134,7 +133,8 @@
             android:gravity="center_vertical"
             android:text="@string/btn_back"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/txt_size_16" />
+            android:textSize="@dimen/txt_size_18"
+            android:padding="@dimen/btn_navig_padding" />
 
         <TextView
             android:id="@+id/tv_next_RS"
@@ -147,17 +147,20 @@
             android:gravity="center_vertical"
             android:text="@string/btn_next"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/txt_size_16" />
+            android:textSize="@dimen/txt_size_18"
+            android:padding="@dimen/btn_navig_padding" />
 
         <com.thinkmobiles.mysmallcommunity.ui.custom_views.CirclePageIndicator
             android:id="@+id/cpiIndicator_RS"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:gravity="center_vertical"
-
             app:fillColor="@color/color_green_accent_400"
-            app:pageColor="@color/color_grey_500" />
+            app:pageColor="@color/color_grey_500"
+            android:layout_centerInParent="true"
+            android:paddingLeft="@dimen/abc_control_corner_material"
+            android:paddingRight="@dimen/abc_control_corner_material"
+            />
 
     </RelativeLayout>
 
