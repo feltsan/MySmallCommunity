@@ -1,5 +1,7 @@
 package com.thinkmobiles.mysmallcommunity.models;
 
+import android.graphics.Bitmap;
+
 import java.util.List;
 
 /**
@@ -31,6 +33,15 @@ public class User {
     private String familyStatus;
     private String token;
     private List<String> userInteres;
+    private Bitmap profileImage;
+
+    public Bitmap getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(Bitmap profileImage) {
+        this.profileImage = profileImage;
+    }
 
     public String getUserId() {
         return userId;

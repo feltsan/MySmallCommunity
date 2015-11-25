@@ -9,7 +9,7 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:elevation="6dp"
-        android:id="@+id/iv_profileAvatar_ND"
+        android:id="@+id/iv_profileAvatar_IDHM"
         android:layout_width="76dp"
         android:layout_height="76dp"
         android:layout_centerHorizontal="true"
@@ -21,14 +21,14 @@
         android:layout_height="56dp"
         android:orientation="vertical"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/iv_profileAvatar_ND"
+        android:layout_below="@id/iv_profileAvatar_IDHM"
         android:layout_marginTop="8dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Michael Hemmanoel"
-            android:id="@+id/tv_nameProfile_ND"
+            android:id="@+id/tv_nameProfile_IDHM"
             android:layout_gravity="center_horizontal"
             android:textStyle="bold"
             android:textSize="20sp"

@@ -3,6 +3,11 @@ package com.thinkmobiles.mysmallcommunity.ui.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,9 +23,12 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.parse.ParseFacebookUtils;
+import com.squareup.okhttp.Response;
 import com.thinkmobiles.mysmallcommunity.base.BaseFragment;
 import com.thinkmobiles.mysmallcommunity.global.Constants;
 import com.thinkmobiles.mysmallcommunity.interfaces.Saveiface;
@@ -33,6 +41,13 @@ import com.thinkmobiles.mysmallcommunity.ui.fragments.registration_steps.HomeFra
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 
 
 /**
@@ -77,7 +92,7 @@ public class LoginFragment extends BaseFragment implements Saveiface {
 
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
-            public void onSuccess(LoginResult loginResult) {
+            public void onSuccess(final LoginResult loginResult) {
                 final GraphRequest request = GraphRequest.newMeRequest(
                         loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
                             @Override
@@ -92,6 +107,8 @@ public class LoginFragment extends BaseFragment implements Saveiface {
                                     mUser.setFirstName(names[0]);
                                     mUser.setLastName(names[1]);
                                     mUser.setEmail(jsonObject.getString("email"));
+
+                                    getImageUrl(loginResult.getAccessToken());
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -118,6 +135,63 @@ public class LoginFragment extends BaseFragment implements Saveiface {
             }
         });
 
+    }
+
+    private void getImageUrl(AccessToken _token){
+        Bundle params = new Bundle();
+        params.putString("fields", "id,email,gender,cover,picture.type(large)");
+        new GraphRequest(_token,
+                "me",
+                params,
+                HttpMethod.GET,
+                new GraphRequest.Callback() {
+                    @Override
+                    public void onCompleted(GraphResponse response) {
+                        if (response != null) {
+                            try {
+                                JSONObject data = response.getJSONObject();
+                                if (data.has("picture")) {
+                                    String profilePicUrl = data.getJSONObject("picture").getJSONObject("data").getString("url");
+                                    Log.d("DENYSYUK", "Picture = " + profilePicUrl);
+                                    getImageProfile(profilePicUrl);
+                                }
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }).executeAsync();
+    }
+
+    private void getImageProfile(final String _url) {
+                            AsyncTask<Void, Void, Bitmap> t = new AsyncTask<Void, Void, Bitmap>(){
+                                protected Bitmap doInBackground(Void... p) {
+                                    Bitmap bm = null;
+                                    try {
+                                        URL aURL = new URL(_url);
+                                        URLConnection conn = aURL.openConnection();
+                                        conn.setUseCaches(true);
+                                        conn.connect();
+                                        InputStream is = conn.getInputStream();
+                                        BufferedInputStream bis = new BufferedInputStream(is);
+                                        bm = BitmapFactory.decodeStream(bis);
+                                        bis.close();
+                                        is.close();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    return bm;
+                                }
+
+                                protected void onPostExecute(Bitmap bm){
+                                    mUser.setProfileImage(bm);
+                                    Drawable drawable = new BitmapDrawable(getResources(), bm);
+                                    Log.d("DENYSYUK", "Drawable = " + (drawable==null));
+
+                                }
+                            };
+                            t.execute();
     }
 
     @Override

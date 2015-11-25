@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:elevation="6dp"
+            android:id="@+id/iv_profileAvatar_PLI"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="16dp"
+            android:src="@drawable/iges"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp">
+
+            <TextView
+                android:id="@+id/tvUserName_PLI"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Armando Lucas"/>
+
+            <TextView
+                android:id="@+id/tvDate_PLI"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="19-Nov at 02:32 PM"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvText_PLI"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="My first post in my small communiy"
+        android:layout_margin="16dp"/>
+
+    <ImageView
+        android:id="@+id/ivPostImage_PLI"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@drawable/terrance_photo"
+        android:scaleType="centerCrop"/>
+
+</LinearLayout>
