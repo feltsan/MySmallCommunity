@@ -77,7 +77,7 @@ public class CreatePostFragment extends BaseFragment {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] data = stream.toByteArray();
-        file = new ParseFile("terrance.png", data);
+        file = new ParseFile(System.currentTimeMillis()+".png", data);
         file.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {

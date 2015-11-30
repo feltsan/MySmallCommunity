@@ -76,7 +76,7 @@ public class StoriesFragment extends BaseFragment {
             public void done(List<ParseObject> list, ParseException e) {
                 if(e == null){
                     for(ParseObject o: list){
-                        final Post post = new Post();
+                        Post post = new Post();
                         post.setId(o.getObjectId());
                         post.setUserName(o.getString("userName"));
                         post.setUserId(o.getString("userId"));

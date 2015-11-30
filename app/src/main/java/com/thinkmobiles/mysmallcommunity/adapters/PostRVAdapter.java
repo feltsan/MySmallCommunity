@@ -64,7 +64,6 @@ public class PostRVAdapter extends RecyclerView.Adapter<PostRVAdapter.PostViewHo
         holder.name.setText(posts.get(position).getUserName());
         holder.date.setText(formatDate(posts.get(position).getDate()));
         holder.text.setText(posts.get(position).getText());
-        holder.image.setTag(posts.get(position).getId());
         if(posts.get(position).getImage() != null) {
             holder.image.setImageBitmap(posts.get(position).getImage());
         }
