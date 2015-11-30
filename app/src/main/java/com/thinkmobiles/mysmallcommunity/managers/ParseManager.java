@@ -61,6 +61,7 @@ public class ParseManager {
                     user.setCommunity(parseObject.getString("idCommunity"));
                     user.setArea(parseObject.getString("idDistrict"));
                     user.setFamilyStatus(parseObject.getString("family_status"));
+                    Preferences.newInstance(mContext).setId(parseObject.getObjectId());
                 }
             }
         });

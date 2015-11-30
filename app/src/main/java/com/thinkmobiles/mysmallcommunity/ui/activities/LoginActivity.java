@@ -15,6 +15,7 @@ import com.facebook.login.widget.LoginButton;
 import com.thinkmobiles.mysmallcommunity.R;
 import com.thinkmobiles.mysmallcommunity.base.BaseActivity;
 import com.thinkmobiles.mysmallcommunity.managers.ParseManager;
+import com.thinkmobiles.mysmallcommunity.managers.Preferences;
 import com.thinkmobiles.mysmallcommunity.ui.fragments.LoginFragment;
 
 import java.io.ByteArrayInputStream;
@@ -31,19 +32,21 @@ import java.security.cert.X509Certificate;
  */
 public class LoginActivity extends BaseActivity {
     private ParseManager mManager;
+    private Preferences mPreference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mManager = ParseManager.newInstance(this);
+        mPreference = Preferences.newInstance(this);
 
-        if(mManager.userIsLoginned()) {
+        //if(mPreference.getId() == null) {
             getFragmentNavigator().replaceFragment(new LoginFragment());
-        } else {
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
-        }
+//        } else {
+//            startActivity(new Intent(this, MainActivity.class));
+//            finish();
+//        }
 
     }
 }

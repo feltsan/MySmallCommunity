@@ -50,7 +50,7 @@ public abstract class BaseFragment extends Fragment {
      */
     @SuppressWarnings("unchecked")
     protected <T extends View> T $(int resId){
-        if (inflatedView == null )
+        if (inflatedView == null)
             return null;
         return (T) inflatedView.findViewById(resId);
     }

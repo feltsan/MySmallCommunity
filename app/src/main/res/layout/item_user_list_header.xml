@@ -58,6 +58,7 @@
                 android:textSize="18dp"/>
 
             <TextView
+                android:id="@+id/tvEmirates_IULH"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Community name"/>
@@ -112,6 +113,16 @@
             android:layout_marginLeft="16dp"/>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnNewPost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New post"
+        android:background="@color/color_green_accent_700"
+        android:layout_gravity="center_horizontal"
+        android:padding="16dp"
+        android:layout_marginBottom="16dp"/>
 
 </LinearLayout>
 

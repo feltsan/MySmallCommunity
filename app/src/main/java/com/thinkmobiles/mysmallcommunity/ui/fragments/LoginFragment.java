@@ -10,7 +10,6 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,24 +19,20 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.parse.ParseFacebookUtils;
-import com.squareup.okhttp.Response;
 import com.thinkmobiles.mysmallcommunity.base.BaseFragment;
-import com.thinkmobiles.mysmallcommunity.global.Constants;
 import com.thinkmobiles.mysmallcommunity.interfaces.Saveiface;
 import com.thinkmobiles.mysmallcommunity.managers.ParseManager;
+import com.thinkmobiles.mysmallcommunity.managers.Preferences;
 import com.thinkmobiles.mysmallcommunity.models.User;
 import com.thinkmobiles.mysmallcommunity.ui.activities.MainActivity;
 import com.thinkmobiles.mysmallcommunity.ui.activities.RegistrationStepsActivity;
 import com.thinkmobiles.mysmallcommunity.R;
-import com.thinkmobiles.mysmallcommunity.ui.fragments.registration_steps.HomeFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,7 +40,6 @@ import org.json.JSONObject;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -109,7 +103,6 @@ public class LoginFragment extends BaseFragment implements Saveiface {
                                     mUser.setEmail(jsonObject.getString("email"));
 
                                     getImageUrl(loginResult.getAccessToken());
-
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -140,6 +133,7 @@ public class LoginFragment extends BaseFragment implements Saveiface {
     private void getImageUrl(AccessToken _token){
         Bundle params = new Bundle();
         params.putString("fields", "id,email,gender,cover,picture.type(large)");
+        params.putBoolean("redirect", false);
         new GraphRequest(_token,
                 "me",
                 params,
@@ -148,12 +142,13 @@ public class LoginFragment extends BaseFragment implements Saveiface {
                     @Override
                     public void onCompleted(GraphResponse response) {
                         if (response != null) {
+                            Log.d("DENYSYUK", response.toString());
                             try {
                                 JSONObject data = response.getJSONObject();
                                 if (data.has("picture")) {
                                     String profilePicUrl = data.getJSONObject("picture").getJSONObject("data").getString("url");
                                     Log.d("DENYSYUK", "Picture = " + profilePicUrl);
-                                    getImageProfile(profilePicUrl);
+                                    mUser.setPhotoUrl(profilePicUrl);
                                 }
 
                             } catch (Exception e) {

@@ -21,6 +21,8 @@
 
     <string name="welcome">Welcome</string>
     <string name="login_text">Bla bla bla</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
 
     <string-array name="family_status">
         <item>Married</item>

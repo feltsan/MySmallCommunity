@@ -28,12 +28,65 @@ public class User {
     private String lastName;
     private String email;
     private String emirate;
+    private String emirateName;
     private String community;
     private String area;
     private String familyStatus;
     private String token;
     private List<String> userInteres;
     private Bitmap profileImage;
+    private String photoUrl;
+    private String nationality;
+    private String gender;
+    private String proffession;
+
+    public String getEmirateName() {
+        return emirateName;
+    }
+
+    public void setEmirateName(String emirateName) {
+        this.emirateName = emirateName;
+    }
+
+    public String getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getProffession() {
+        return proffession;
+    }
+
+    public void setProffession(String proffession) {
+        this.proffession = proffession;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
 
     public Bitmap getProfileImage() {
         return profileImage;
@@ -131,11 +184,4 @@ public class User {
         this.userInteres = userInteres;
     }
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 }

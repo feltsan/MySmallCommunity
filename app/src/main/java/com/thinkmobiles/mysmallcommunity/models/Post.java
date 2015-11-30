@@ -2,6 +2,8 @@ package com.thinkmobiles.mysmallcommunity.models;
 
 import android.graphics.Bitmap;
 
+import java.util.Date;
+
 /**
  * Created by dreamfire on 24.11.15.
  */
@@ -9,11 +11,47 @@ public class Post {
     private String id;
     private String title;
     private String text;
-    private Bitmap photo;
+    private String photo;
     private String video;
     private String userName;
-    private String date;
+    private String userId;
+    private Date date;
     private String countLike;
+    private Bitmap image;
+    private int likeCount;
+    private int dislikeCount;
+
+    public int getDislikeCount() {
+        return dislikeCount;
+    }
+
+    public void setDislikeCount(int dislikeCount) {
+        this.dislikeCount = dislikeCount;
+    }
+
+    public int getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
+
+    public Bitmap getImage() {
+        return image;
+    }
+
+    public void setImage(Bitmap image) {
+        this.image = image;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getId() {
         return id;
@@ -39,11 +77,11 @@ public class Post {
         this.text = text;
     }
 
-    public Bitmap getPhoto() {
+    public String getPhoto() {
         return photo;
     }
 
-    public void setPhoto(Bitmap photo) {
+    public void setPhoto(String photo) {
         this.photo = photo;
     }
 
@@ -63,11 +101,11 @@ public class Post {
         this.userName = userName;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

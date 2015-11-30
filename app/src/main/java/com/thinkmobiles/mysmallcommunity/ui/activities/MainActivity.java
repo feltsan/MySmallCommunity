@@ -3,6 +3,7 @@ package com.thinkmobiles.mysmallcommunity.ui.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -17,17 +18,26 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.facebook.login.LoginManager;
 import com.thinkmobiles.mysmallcommunity.R;
 import com.thinkmobiles.mysmallcommunity.api.API;
 import com.thinkmobiles.mysmallcommunity.base.BaseActivity;
+import com.thinkmobiles.mysmallcommunity.base.BaseFragment;
 import com.thinkmobiles.mysmallcommunity.global.Constants;
 import com.thinkmobiles.mysmallcommunity.managers.ParseManager;
+import com.thinkmobiles.mysmallcommunity.managers.Preferences;
 import com.thinkmobiles.mysmallcommunity.models.User;
+import com.thinkmobiles.mysmallcommunity.ui.fragments.MessagesFragment;
+import com.thinkmobiles.mysmallcommunity.ui.fragments.PeopleFragment;
 import com.thinkmobiles.mysmallcommunity.ui.fragments.ProfileFragment;
+import com.thinkmobiles.mysmallcommunity.ui.fragments.SettingFragment;
+import com.thinkmobiles.mysmallcommunity.ui.fragments.SettingsFragment;
+import com.thinkmobiles.mysmallcommunity.ui.fragments.StoriesFragment;
 
 public class MainActivity extends BaseActivity implements AdapterView.OnItemClickListener {
     private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mDrawerToggle;
     private ListView mDrawerList;
     private Toolbar toolbar;
     private ParseManager mManager;
@@ -51,6 +61,8 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
         mManager = ParseManager.newInstance(this);
 
+        getFragmentNavigator().replaceFragment(new StoriesFragment());
+
     }
 
     private void findUI(){
@@ -58,20 +70,38 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         mDrawerLayout        = $(R.id.drawer_layout);
         mDrawerList          = $(R.id.left_drawer);
 
+        mDrawerToggle = new ActionBarDrawerToggle(this,
+                mDrawerLayout,
+                R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close){
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                invalidateOptionsMenu();
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                invalidateOptionsMenu();
+            }
+        };
+
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View headerView = inflater.inflate(R.layout.item_drawer_header_menu, null);
-
-        findHeader(headerView);
-
         profile = (RelativeLayout) headerView.findViewById(R.id.profile_header);
-        mDrawerList.addHeaderView(headerView);
+        findHeader(headerView);
     }
 
     private void findHeader(View _v) {
         ImageView ivProfile = (ImageView) _v.findViewById(R.id.iv_profileAvatar_IDHM);
-        ivProfile.setImageBitmap(mUser.getProfileImage());
+        Glide.with(this).load(mUser.getPhotoUrl()).into(ivProfile);
         TextView tvName = (TextView) _v.findViewById(R.id.tv_nameProfile_IDHM);
         tvName.setText(mUser.getFirstName() + " " + mUser.getLastName());
+
+        mDrawerList.addHeaderView(_v);
     }
     private void setListener(){
         mDrawerList.setOnItemClickListener(this);
@@ -79,12 +109,7 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
             @Override
             public void onClick(View v) {
                 getFragmentNavigator().replaceFragment(new ProfileFragment());
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mDrawerLayout.closeDrawers();
-                    }
-                }, 300);
+              closeDrawer();
             }
         });
     }
@@ -94,6 +119,15 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    private void closeDrawer(){
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mDrawerLayout.closeDrawers();
+            }
+        }, 300);
     }
 
     @Override
@@ -114,17 +148,34 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (position){
+            case 1:
+                changeFragment(new StoriesFragment());
+                break;
+            case 2:
+                changeFragment(new MessagesFragment());
+                break;
+            case 5:
+                changeFragment(new PeopleFragment());
+                break;
+            case 8:
+                changeFragment(new SettingsFragment());
+                break;
             case 9:
                 LoginManager.getInstance().logOut();
                 mManager.closeSession();
+                Preferences.newInstance(this).clearId();
                 startActivity(new Intent(this, LoginActivity.class));
                 finish();
                 break;
         }
     }
 
+    private void changeFragment(BaseFragment fragment){
+        getFragmentNavigator().replaceFragment(fragment);
+        closeDrawer();
+    }
+
     public void getPost(){
         Log.e("MOCK", API.getPosts().toString());
-
     }
 }

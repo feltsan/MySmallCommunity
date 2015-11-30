@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    android:elevation="4dp">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:elevation="6dp"
+                android:id="@+id/iv_profileAvatar_PLI"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="8dp">
+
+                <TextView
+                    android:id="@+id/tvUserName_PLI"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Armando Lucas"
+                    android:textSize="18sp"
+                    android:textColor="#000"/>
+
+                <TextView
+                    android:id="@+id/tvDate_PLI"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="19-Nov at 02:32 PM"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvText_PLI"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="My first post in my small communiy"
+            android:layout_margin="8dp"/>
+
+        <ImageView
+            android:id="@+id/ivPostImage_PLI"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp">
+            <ImageView
+                android:id="@+id/ivLike"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/thumbup"
+                android:layout_margin="8dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"/>
+            <TextView
+                android:id="@+id/tvLike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:layout_margin="8dp"
+                android:layout_toRightOf="@id/ivLike"
+                android:layout_centerVertical="true"/>
+            <ImageView
+                android:id="@+id/ivDisLike"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/thumbdown"
+                android:layout_margin="8dp"
+                android:layout_toRightOf="@id/tvLike"
+                android:layout_centerVertical="true"/>
+            <TextView
+                android:id="@+id/tvDisLike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:layout_margin="8dp"
+                android:layout_toRightOf="@id/ivDisLike"
+                android:layout_centerVertical="true"/>
+            <ImageView
+                android:id="@+id/ivComment"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_chat_bubble_black_24dp"
+                android:layout_margin="8dp"
+                android:layout_toRightOf="@id/tvDisLike"
+                android:layout_centerVertical="true"/>
+            <TextView
+                android:id="@+id/tvComment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:layout_margin="8dp"
+                android:layout_toRightOf="@id/ivComment"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:gravity="right"
+                android:text="+ Report Abbuse"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="16dp"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Write a comment..."
+            android:layout_margin="8dp"/>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
