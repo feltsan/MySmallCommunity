@@ -48,7 +48,7 @@ public class MessageRVAdapter extends RecyclerView.Adapter<MessageRVAdapter.Mess
         holder.date.setText(formatDate(messages.get(position).getDate()));
         holder.text.setText(messages.get(position).getText());
         if(messages.get(position).getPhoto() != null) {
-            Glide.with(mContext).load(messages.get(position).getPhoto())
+            Glide.with(mContext).load(messages.get(position).getPhoto()).fitCenter()
                     .into(holder.image);
         }
     }

@@ -2,12 +2,14 @@ package com.thinkmobiles.mysmallcommunity.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.thinkmobiles.mysmallcommunity.R;
 import com.thinkmobiles.mysmallcommunity.adapters.RegistrationPagerAdapter;
@@ -28,10 +30,9 @@ import java.util.ArrayList;
  */
 public class RegistrationStepsActivity extends BaseActivity implements View.OnClickListener, View.OnTouchListener {
 
-    private final static int FB_SCREEN = 0;
-    private final static int HOME_SCREEN = 1;
-    private final static int FAMILY_SCREEN = 2;
-    private final static int INTERES_SCREEN = 3;
+    private final static int COMMUNITY_SCREEN    = 0;
+    private final static int FAMILY_SCREEN       = 1;
+    private final static int INTERES_SCREEN      = 2;
 
     private ViewPager imagePager;
     private CirclePageIndicator circlePageIndicator;
@@ -40,6 +41,7 @@ public class RegistrationStepsActivity extends BaseActivity implements View.OnCl
     private TextView nextButton;
     private AppCompatRadioButton home, family, interest;
     private ParseManager mManager;
+    private boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,19 +70,19 @@ public class RegistrationStepsActivity extends BaseActivity implements View.OnCl
         interest.setOnTouchListener(this);
         nextButton.setOnClickListener(this);
         imagePager.setOnTouchListener(this);
+        backButton.setOnClickListener(this);
     }
 
     private void initImagePager() {
         ArrayList<Fragment> fragments = new ArrayList<Fragment>();
-        fragments.add(FB_SCREEN, new BlankFragment());
-        fragments.add(HOME_SCREEN, new HomeFragment());
+        fragments.add(COMMUNITY_SCREEN, new HomeFragment());
         fragments.add(FAMILY_SCREEN, new FamilyFragment());
         fragments.add(INTERES_SCREEN, new InteresFragment());
 
         imageAdapter = new RegistrationPagerAdapter(fragments, getSupportFragmentManager());
         imagePager.setAdapter(imageAdapter);
-        imagePager.setCurrentItem(1);
-        backButton.setVisibility(View.INVISIBLE);
+        imagePager.setCurrentItem(0);
+
         circlePageIndicator.setViewPager(imagePager);
         circlePageIndicator.setOnTouchListener(this);
     }
@@ -95,12 +97,11 @@ public class RegistrationStepsActivity extends BaseActivity implements View.OnCl
             @Override
             public void onPageSelected(int position) {
                 switch (position) {
-                    case HOME_SCREEN:
+                    case COMMUNITY_SCREEN:
                         setAllUncheck();
                         home.setChecked(true);
                         break;
                     case FAMILY_SCREEN:
-                        enableBackButton();
                         nextButton.setText(getResources().getString(R.string.btn_next));
                         setAllUncheck();
                         family.setChecked(true);
@@ -121,22 +122,19 @@ public class RegistrationStepsActivity extends BaseActivity implements View.OnCl
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        // do something here and don't write super.onBackPressed()
-    }
-
 
     @Override
     public void onClick(View v) {
 
-        if (imagePager.getCurrentItem() == INTERES_SCREEN) {
-            mManager.saveUser(User.newInstance());
-            startActivity(new Intent(RegistrationStepsActivity.this, MainActivity.class));
-            finish();
-        }
+        switch (v.getId()){
+            case R.id.tv_back_RS:
+                goToPrevious();
+                break;
 
-        imagePager.setCurrentItem(imagePager.getCurrentItem() + 1);
+            case R.id.tv_next_RS:
+                goToNext();
+                break;
+        }
 
     }
 
@@ -146,25 +144,45 @@ public class RegistrationStepsActivity extends BaseActivity implements View.OnCl
         interest.setChecked(false);
     }
 
-    private void enableBackButton(){
-        backButton.setVisibility(View.VISIBLE);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(imagePager.getCurrentItem()== FAMILY_SCREEN)
-                    disableBackButton();
-                imagePager.setCurrentItem(imagePager.getCurrentItem() -1);
-            }
-        });
+    private void goToPrevious(){
+
+        if (imagePager.getCurrentItem() == COMMUNITY_SCREEN) {
+            onBackPressed();
+        }
+        imagePager.setCurrentItem(imagePager.getCurrentItem() - 1);
     }
 
-    private void disableBackButton(){
-        backButton.setVisibility(View.INVISIBLE);
-        backButton.setOnClickListener(null);
+    private void goToNext(){
+        if (imagePager.getCurrentItem() == INTERES_SCREEN) {
+            mManager.saveUser(User.newInstance());
+            startActivity(new Intent(RegistrationStepsActivity.this, MainActivity.class));
+            finish();
+        }
+
+        imagePager.setCurrentItem(imagePager.getCurrentItem() + 1);
     }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
     }
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomBadge">
+        <attr name="badgeColor" format="color"/>
+        <attr name="badgeCount" format="string"/>
+        <attr name="countColor" format="color"/>
+        <attr name="countSize" format="dimension"/>
+        <attr name="radiusRound" format="dimension"/>
+        <attr name="maxWidth" format="dimension"/>
+    </declare-styleable>
+
+
+
+</resources>

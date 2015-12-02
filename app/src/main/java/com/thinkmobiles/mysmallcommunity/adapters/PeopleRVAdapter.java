@@ -49,7 +49,7 @@ public class PeopleRVAdapter extends RecyclerView.Adapter<PeopleRVAdapter.People
     @Override
     public void onBindViewHolder(PeopleViewHolder holder, int position) {
         holder.tvName.setText(peoples.get(position).getName());
-        Glide.with(mContext).load(peoples.get(position).getImage()).into(holder.image);
+        Glide.with(mContext).load(peoples.get(position).getImage()).fitCenter().into(holder.image);
     }
 
     @Override

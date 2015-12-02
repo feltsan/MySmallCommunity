@@ -18,4 +18,11 @@
     <dimen name="btn_steps_size">40dp</dimen>
     <dimen name="btn_navig_padding">12dp</dimen>
     <dimen name="navig_padding">16dp</dimen>
+
+    <!-- Drawer navigation. -->
+    <dimen name="padding_item">16dp</dimen>
+
+    <!-- Custom badge. -->
+    <dimen name="radius_round">3dp</dimen>
+
 </resources>

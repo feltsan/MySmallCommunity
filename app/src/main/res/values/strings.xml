@@ -1,11 +1,12 @@
 <resources>
 
-    <!--APP -->
+                 <!--APP -->
+
     <string name="app_name">My small community</string>
     <string name="action_settings">Settings</string>
     <string name="facebook_app_id">1711696742396736</string>
 
-    <!-- Registration -->
+                  <!-- Registration -->
 
     <string name="sign_in">Sign in</string>
     <string name="family_status">Family status</string>
@@ -28,6 +29,18 @@
         <item>Married</item>
         <item>Single</item>
     </string-array>
-    
-    
+
+                 <!-- Drawer nawigation -->
+
+    <string name="stories_item">Stories</string>
+    <string name="messages_item">Messages</string>
+    <string name="gallery_item">Gallery</string>
+    <string name="event_item">Event</string>
+    <string name="people_item">People</string>
+    <string name="group_item">Group</string>
+    <string name="directories_item">Directories</string>
+    <string name="settings_item">Settings</string>
+    <string name="notification_item">Notifications</string>
+    <string name="logout_item">Log out</string>
+
 </resources>

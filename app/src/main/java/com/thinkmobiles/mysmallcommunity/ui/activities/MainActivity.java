@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.facebook.login.LoginManager;
 import com.thinkmobiles.mysmallcommunity.R;
+import com.thinkmobiles.mysmallcommunity.adapters.DrawerNavigationAdapter;
 import com.thinkmobiles.mysmallcommunity.api.API;
 import com.thinkmobiles.mysmallcommunity.base.BaseActivity;
 import com.thinkmobiles.mysmallcommunity.base.BaseFragment;
@@ -34,6 +35,7 @@ import com.thinkmobiles.mysmallcommunity.ui.fragments.ProfileFragment;
 import com.thinkmobiles.mysmallcommunity.ui.fragments.SettingFragment;
 import com.thinkmobiles.mysmallcommunity.ui.fragments.SettingsFragment;
 import com.thinkmobiles.mysmallcommunity.ui.fragments.StoriesFragment;
+import com.thinkmobiles.mysmallcommunity.utility.DrawerMenu;
 
 public class MainActivity extends BaseActivity implements AdapterView.OnItemClickListener {
     private DrawerLayout mDrawerLayout;
@@ -55,9 +57,8 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
         setSupportActionBar(toolbar);
         setListener();
 
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                Constants.mItemMenu));
-       getPost();
+        mDrawerList.setAdapter(new DrawerNavigationAdapter(this, new DrawerMenu().createDrawerNawiItem(this)));
+        getPost();
 
         mManager = ParseManager.newInstance(this);
 
@@ -97,7 +98,8 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
 
     private void findHeader(View _v) {
         ImageView ivProfile = (ImageView) _v.findViewById(R.id.iv_profileAvatar_IDHM);
-        Glide.with(this).load(mUser.getPhotoUrl()).into(ivProfile);
+        Glide.with(this).load(mUser.getPhotoUrl()).fitCenter().into(ivProfile);
+
         TextView tvName = (TextView) _v.findViewById(R.id.tv_nameProfile_IDHM);
         tvName.setText(mUser.getFirstName() + " " + mUser.getLastName());
 
@@ -157,10 +159,10 @@ public class MainActivity extends BaseActivity implements AdapterView.OnItemClic
             case 5:
                 changeFragment(new PeopleFragment());
                 break;
-            case 8:
+            case 9:
                 changeFragment(new SettingsFragment());
                 break;
-            case 9:
+            case 10:
                 LoginManager.getInstance().logOut();
                 mManager.closeSession();
                 Preferences.newInstance(this).clearId();

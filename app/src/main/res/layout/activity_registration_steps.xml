@@ -15,27 +15,6 @@
         android:orientation="horizontal">
 
         <RelativeLayout
-            android:id="@+id/btn_facebook_ARS"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1">
-
-            <android.support.v7.widget.AppCompatRadioButton
-                android:id="@+id/facebook_img"
-                style="@style/steps_radio"
-                android:background="@drawable/selector_fb"
-                android:gravity="bottom" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:text="@string/sign_in" />
-        </RelativeLayout>
-
-        <RelativeLayout
             android:id="@+id/btn_region_ARS"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

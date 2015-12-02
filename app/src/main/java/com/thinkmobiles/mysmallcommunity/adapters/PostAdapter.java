@@ -78,7 +78,7 @@ public class PostAdapter extends BaseAdapter {
         text.setText(mPosts.get(position).getText());
         if(mPosts.get(position).getImage() != null)
         postImage.setImageBitmap(mPosts.get(position).getImage());
-        Glide.with(mContext).load(mPosts.get(position).getPhoto()).into(image);
+        Glide.with(mContext).load(mPosts.get(position).getPhoto()).fitCenter().into(image);
 
         ParseQuery<ParseObject> q = new ParseQuery<ParseObject>("Likes");
         q.whereEqualTo("postId", mPosts.get(a).getId());

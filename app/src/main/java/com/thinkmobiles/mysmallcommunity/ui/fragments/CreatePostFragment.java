@@ -96,7 +96,7 @@ public class CreatePostFragment extends BaseFragment {
         post.put("photo", mUser.getPhotoUrl());
         post.put("userName", mUser.getFirstName()+" "+mUser.getLastName());
         if(_file != null)
-        post.put("image", file);
+            post.put("image", file);
         post.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {

@@ -60,7 +60,7 @@ public class PostRVAdapter extends RecyclerView.Adapter<PostRVAdapter.PostViewHo
     @Override
     public void onBindViewHolder(final PostViewHolder holder, final int position) {
         if(posts.get(position).getPhoto() != null)
-            Glide.with(mContext).load(posts.get(position).getPhoto()).into(holder.photo);
+            Glide.with(mContext).load(posts.get(position).getPhoto()).fitCenter().into(holder.photo);
         holder.name.setText(posts.get(position).getUserName());
         holder.date.setText(formatDate(posts.get(position).getDate()));
         holder.text.setText(posts.get(position).getText());

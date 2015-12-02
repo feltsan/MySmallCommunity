@@ -132,7 +132,7 @@ public class LoginFragment extends BaseFragment implements Saveiface {
 
     private void getImageUrl(AccessToken _token){
         Bundle params = new Bundle();
-        params.putString("fields", "id,email,gender,cover,picture.type(large)");
+        params.putString("fields", "id,email,gender,cover, picture.height(300).width(300)");
         params.putBoolean("redirect", false);
         new GraphRequest(_token,
                 "me",
