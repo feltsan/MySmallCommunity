@@ -40,4 +40,5 @@ dependencies {
 
     // image processing
     compile 'de.hdodenhof:circleimageview:2.0.0'
+    compile 'com.felipecsl.asymmetricgridview:library:2.0.1'
 }

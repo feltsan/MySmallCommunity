@@ -16,6 +16,8 @@ import com.thinkmobiles.mysmallcommunity.R;
 import com.thinkmobiles.mysmallcommunity.base.BaseActivity;
 import com.thinkmobiles.mysmallcommunity.managers.ParseManager;
 import com.thinkmobiles.mysmallcommunity.managers.Preferences;
+import com.thinkmobiles.mysmallcommunity.ui.custom_views.CustomGalleryPost;
+import com.thinkmobiles.mysmallcommunity.ui.fragments.InviteFragment;
 import com.thinkmobiles.mysmallcommunity.ui.fragments.LoginFragment;
 
 import java.io.ByteArrayInputStream;
@@ -42,7 +44,7 @@ public class LoginActivity extends BaseActivity {
         mPreference = Preferences.newInstance(this);
 
         //if(mPreference.getId() == null) {
-            getFragmentNavigator().replaceFragment(new LoginFragment());
+            getFragmentNavigator().replaceFragment(new CustomGalleryPost());
 //        } else {
 //            startActivity(new Intent(this, MainActivity.class));
 //            finish();

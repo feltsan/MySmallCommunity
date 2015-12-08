@@ -28,7 +28,7 @@ public class DrawerMenu {
         items.add(new DrawerMenuItem(Constants.GROUP_ID, context.getDrawable(R.drawable.ic_person_add_black_24dp), context.getResources().getString(R.string.group_item)));
         items.add(new DrawerMenuItem(Constants.DIRECTORIES_ID, context.getDrawable(R.drawable.ic_assignment_black_24dp), context.getResources().getString(R.string.directories_item)));
         items.add(new DrawerMenuItem(Constants.NOTIFICATION_ID, context.getDrawable(R.drawable.ic_add_alert_black_24dp), context.getResources().getString(R.string.notification_item)));
-        items.add(new DrawerMenuItem(Constants.SETTINGS_ID, context.getDrawable(R.drawable.ic_settings_black_24dp), context.getResources().getString(R.string.notification_item)));
+        items.add(new DrawerMenuItem(Constants.SETTINGS_ID, context.getDrawable(R.drawable.ic_settings_black_24dp), context.getResources().getString(R.string.settings_item)));
         items.add(new DrawerMenuItem(Constants.LOGOUT_ID, context.getDrawable(R.drawable.ic_exit_to_app_black_24dp), context.getResources().getString(R.string.logout_item)));
 
         return items;

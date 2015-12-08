@@ -3,25 +3,36 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-  <android.support.design.widget.TextInputLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
-      <EditText
-          android:id="@+id/etTopic_FCM"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:hint="Topic"/>
-  </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <EditText
-            android:id="@+id/etText_FCM"
+    <TextView
+        android:id="@+id/tvTo_FCM"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/invite_to"
+        android:textSize="18sp"
+        android:padding="16dp"/>
+
+        <TextView
+            android:id="@+id/tvName_FCM"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Text"/>
-    </android.support.design.widget.TextInputLayout>
+            android:layout_toRightOf="@id/tvTo_FCM"
+            android:text="Yaroslav Denisyk"
+            android:textSize="18sp"
+            android:textColor="@color/color_green_accent_700"
+            android:padding="16dp"/>
+
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/etText_FCM"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="300dp"
+        android:hint="Send a message"
+        android:gravity="top"/>
 
     <Button
         android:id="@+id/btnSend_FCM"

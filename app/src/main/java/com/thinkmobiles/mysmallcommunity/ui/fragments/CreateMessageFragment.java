@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.parse.ParseCloud;
 import com.parse.ParseException;
@@ -19,19 +20,20 @@ import com.thinkmobiles.mysmallcommunity.models.User;
  * Created by dreamfire on 25.11.15.
  */
 public class CreateMessageFragment extends BaseFragment{
-    private EditText mTopic;
     private EditText mText;
     private Button mBtnSend;
     private User mUser;
     private String id;
     private String name;
     private String imageUrl;
+    private TextView tvName;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_create_message);
         mUser = User.newInstance();
+        mActivity.getSupportActionBar().setTitle("New Message");
     }
 
     @Override
@@ -46,8 +48,9 @@ public class CreateMessageFragment extends BaseFragment{
     }
 
     private void findUI(View _v) {
+        tvName = (TextView) _v.findViewById(R.id.tvName_FCM);
+        tvName.setText(name);
         mText = (EditText) _v.findViewById(R.id.etText_FCM);
-        mTopic = (EditText) _v.findViewById(R.id.etTopic_FCM);
         mBtnSend = (Button) _v.findViewById(R.id.btnSend_FCM);
         mBtnSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +60,6 @@ public class CreateMessageFragment extends BaseFragment{
                 message.put("toUser", id);
                 message.put("fromUserName", mUser.getFirstName()+" "+mUser.getLastName());
                 message.put("toUserName", name);
-                message.put("topic", mTopic.getText().toString());
                 message.put("text", mText.getText().toString());
                 message.put("image_url", imageUrl);
                 message.saveInBackground(new SaveCallback() {

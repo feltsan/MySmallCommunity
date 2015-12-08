@@ -66,6 +66,8 @@ public class PostRVAdapter extends RecyclerView.Adapter<PostRVAdapter.PostViewHo
         holder.text.setText(posts.get(position).getText());
         if(posts.get(position).getImage() != null) {
             holder.image.setImageBitmap(posts.get(position).getImage());
+        } else {
+            holder.image.setImageBitmap(null);
         }
         ParseQuery<ParseObject> like = new ParseQuery<ParseObject>("Likes");
         like.whereEqualTo("postId", posts.get(position).getId());

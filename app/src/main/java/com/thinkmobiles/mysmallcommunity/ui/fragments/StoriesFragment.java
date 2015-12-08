@@ -65,6 +65,7 @@ public class StoriesFragment extends BaseFragment {
     private View.OnClickListener onItemClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+
         }
     };
 
@@ -96,7 +97,7 @@ public class StoriesFragment extends BaseFragment {
                         } else {
                             Bitmap bitmap = BitmapFactory.decodeResource(getActivity().getResources(),
                                     R.drawable.ic_favorite_black_24dp);
-                            post.setImage(bitmap);
+                            post.setImage(null);
                         }
                         posts.add(post);
                     }

@@ -34,6 +34,7 @@ import com.thinkmobiles.mysmallcommunity.ui.activities.MainActivity;
 import com.thinkmobiles.mysmallcommunity.ui.activities.RegistrationStepsActivity;
 import com.thinkmobiles.mysmallcommunity.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 

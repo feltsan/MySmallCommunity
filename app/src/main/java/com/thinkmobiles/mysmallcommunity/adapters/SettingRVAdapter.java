@@ -19,6 +19,7 @@ import java.util.List;
 public class SettingRVAdapter extends RecyclerView.Adapter<SettingRVAdapter.SettingViewHolder> {
     private Context mContext;
     private List<Settings> lists;
+    private View.OnClickListener clickListener;
 
     public SettingRVAdapter(Context _c, List<Settings> _lists) {
         mContext = _c;
@@ -29,8 +30,13 @@ public class SettingRVAdapter extends RecyclerView.Adapter<SettingRVAdapter.Sett
     public SettingViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mContext)
                 .inflate(R.layout.item_list_settings, parent, false);
-
+        v.setOnClickListener(clickListener);
         return new SettingViewHolder(v);
+    }
+
+    public void setClickListener(View.OnClickListener clickListener) {
+        this.clickListener = clickListener;
+        notifyDataSetChanged();
     }
 
     @Override

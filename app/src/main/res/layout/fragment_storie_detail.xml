@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:elevation="6dp"
-                android:id="@+id/iv_profileAvatar_PLI"
+                android:id="@+id/iv_profileAvatar_FSD"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_centerHorizontal="true"
@@ -32,7 +32,7 @@
                 android:layout_marginLeft="8dp">
 
                 <TextView
-                    android:id="@+id/tvUserName_PLI"
+                    android:id="@+id/tvUserName_FSD"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Armando Lucas"
@@ -40,7 +40,7 @@
                     android:textColor="#000"/>
 
                 <TextView
-                    android:id="@+id/tvDate_PLI"
+                    android:id="@+id/tvDate_FDS"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="19-Nov at 02:32 PM"/>
@@ -50,14 +50,14 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tvText_PLI"
+            android:id="@+id/tvText_FDS"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="My first post in my small communiy"
             android:layout_margin="8dp"/>
 
         <ImageView
-            android:id="@+id/ivPostImage_PLI"
+            android:id="@+id/ivPostImage_FDS"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"/>
@@ -126,6 +126,34 @@
                 android:layout_centerVertical="true"/>
         </RelativeLayout>
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/commentRV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/etWriteComment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:hint="Write comment..."/>
+
+            <Button
+                android:id="@+id/btnWriteComment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Send"
+                android:layout_alignParentRight="true"/>
+
+        </RelativeLayout>
+
     </LinearLayout>
 
-</android.support.v7.widget.CardView>
+
+
+</ScrollView>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvFrom"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/invite_from"
+            android:textSize="18sp"
+            android:padding="16dp"/>
+
+        <TextView
+            android:id="@+id/tvName_FI"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/tvFrom"
+            android:text="Denysyuk Yaroslav"
+            android:textSize="18sp"
+            android:textColor="@color/color_green_accent_700"
+            android:padding="16dp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvTo"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/invite_to"
+            android:textSize="18sp"
+            android:padding="16dp"/>
+
+        <EditText
+            android:id="@+id/etEmail_FI"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/tvTo"
+            android:text="yaruk@mail.ua"
+            android:textSize="18sp"
+            android:textColor="@color/color_green_accent_700"
+            android:padding="16dp"/>
+
+    </RelativeLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="200dp"
+        android:text="@string/invite_msc" />
+
+</LinearLayout>

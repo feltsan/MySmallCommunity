@@ -50,6 +50,7 @@ public class PeopleProfileFragment extends BaseFragment {
 
     private TextView mName;
     private TextView mCommunity;
+    private TextView mTvGallery;
     private ImageView imageView;
     private View header;
     private Button btnNewMessage;
@@ -162,6 +163,18 @@ public class PeopleProfileFragment extends BaseFragment {
             }
         });
         Glide.with(mActivity).load(url).into(imageView);
+
+        mTvGallery = (TextView) _header.findViewById(R.id.tvGallery);
+        mTvGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GalleryFragment fragment = new GalleryFragment();
+                Bundle b = new Bundle();
+                b.putString("userId", id);
+                fragment.setArguments(b);
+                mActivity.getFragmentNavigator().replaceFragment(fragment);
+            }
+        });
     }
 
 }

@@ -34,6 +34,9 @@ public class SettingsFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         findUI(view);
+
+        mActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mActivity.getSupportActionBar().setTitle(R.string.settings);
     }
 
     private void findUI(View _v){
@@ -43,7 +46,20 @@ public class SettingsFragment extends BaseFragment {
         mRecycler.setLayoutManager(llm);
         adapter = new SettingRVAdapter(getActivity(), lists);
         mRecycler.setAdapter(adapter);
+        adapter.setClickListener(onItemClick);
     }
+
+    private View.OnClickListener onItemClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (mRecycler.getChildAdapterPosition(v)){
+                case 0:
+                    SettingFragment fragment = new SettingFragment();
+                    mActivity.getFragmentNavigator().replaceFragment(fragment);
+                    break;
+            }
+        }
+    };
 
     private void setListSettings(){
         Settings s = new Settings();
@@ -58,12 +74,17 @@ public class SettingsFragment extends BaseFragment {
 
         s = new Settings();
         s.setIcon(R.drawable.ic_cancel_black_24dp);
-        s.setName("Help/FAQ");
+        s.setName("Terms & Conditions");
         lists.add(s);
 
         s = new Settings();
         s.setIcon(R.drawable.ic_check_black_24dp);
         s.setName("Contact admin");
+        lists.add(s);
+
+        s = new Settings();
+        s.setIcon(R.drawable.ic_cancel_black_24dp);
+        s.setName("Help / FAQ");
         lists.add(s);
     }
 }
