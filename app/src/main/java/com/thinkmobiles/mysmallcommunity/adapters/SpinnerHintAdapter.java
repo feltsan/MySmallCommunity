@@ -51,6 +51,6 @@ public class SpinnerHintAdapter extends BaseAdapter {
     public int getCount() {
 // don't display last item. It is used as hint.
         int count = objects.size();
-        return count > 1 ? count - 1 : count;
+        return count > 1 ? count  : 1;
     }
 }

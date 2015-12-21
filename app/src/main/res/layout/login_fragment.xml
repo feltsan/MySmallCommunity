@@ -2,20 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="@drawable/background">
 
-    <TextView
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
         android:gravity="center"
-        android:textSize="22sp"
+        android:src="@drawable/loho_msc"
         android:layout_marginTop="32dp"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/welcome"
         android:layout_marginTop="32dp"
         android:textSize="20sp"
         android:gravity="center"
@@ -26,20 +24,51 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/login_text"
+        android:text="@string/welcome"
         android:layout_marginTop="32dp"
-        android:textSize="20sp"
+        android:textColor="#fff"
+        android:textSize="28sp"
         android:gravity="center"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"/>
 
 
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/login_button"
-        android:layout_width="wrap_content"
+    <Button
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp"/>
+        android:background="@drawable/button_get_st"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="80dp"
+        android:text="@string/button_get_started"
+        android:textColor="#FFF"
+        android:textSize="18sp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/button">
+
+        <ImageView
+            android:id="@+id/iv_logoFb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/facebook55"
+            android:layout_gravity="center"
+            android:layout_marginLeft="18dp"
+            android:layout_centerVertical="true"/>
+        <Button
+            android:id="@+id/btnFacebook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:text="@string/button_sign_in"
+            android:textColor="#FFF"
+            android:textSize="18sp"
+            android:layout_toRightOf="@id/iv_logoFb"/>
+    </RelativeLayout>
 
 </LinearLayout>

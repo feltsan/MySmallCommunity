@@ -53,6 +53,8 @@ public class HomeFragment extends BaseFragment {
         View view = super.onCreateView(inflater, container, savedInstanceState);
         findUI();
         setEmirateSpinner();
+        setCommunitySpinner("");
+        setAreaSpinner("");
         return view;
     }
 
@@ -83,7 +85,7 @@ public class HomeFragment extends BaseFragment {
 
                     SpinnerHintAdapter adapter = new SpinnerHintAdapter(getActivity(), emirList);
                     spinnerEmirate.setAdapter(adapter);
-                    spinnerEmirate.setSelection(emirList.size() - 1);
+                    spinnerEmirate.setSelection(emirList.size()-1);
                 }
             }
         });
@@ -113,20 +115,22 @@ public class HomeFragment extends BaseFragment {
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
-                for (ParseObject o : list) {
+                if(list.size() != 0) {
+                    for (ParseObject o : list) {
+                        SpinnerItem item = new SpinnerItem();
+                        item.setId(o.getObjectId());
+                        item.setName(o.getString("name"));
+
+                        comList.add(item);
+                    }
                     SpinnerItem item = new SpinnerItem();
-                    item.setId(o.getObjectId());
-                    item.setName(o.getString("name"));
-
+                    item.setName("Choose community");
                     comList.add(item);
-                }
-                SpinnerItem item = new SpinnerItem();
-                item.setName("Choose community");
-                comList.add(item);
 
-                SpinnerHintAdapter commAdapter = new SpinnerHintAdapter(getActivity(), comList);
-                spinnerCommunity.setAdapter(commAdapter);
-                spinnerCommunity.setSelection(comList.size() - 1);
+                    SpinnerHintAdapter commAdapter = new SpinnerHintAdapter(getActivity(), comList);
+                    spinnerCommunity.setAdapter(commAdapter);
+                    spinnerCommunity.setSelection(comList.size() - 1);
+                }
             }
         });
 

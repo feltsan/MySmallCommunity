@@ -93,7 +93,7 @@ public class CreatePostFragment extends BaseFragment {
         post.put("userId", mUser.getUserId());
         post.put("communityId", mUser.getCommunity());
         post.put("text", mPostEdit.getText().toString());
-        post.put("photo", mUser.getPhotoUrl());
+        //post.put("photo", mUser.getPhotoUrl());
         post.put("userName", mUser.getFirstName()+" "+mUser.getLastName());
         if(_file != null)
             post.put("image", file);

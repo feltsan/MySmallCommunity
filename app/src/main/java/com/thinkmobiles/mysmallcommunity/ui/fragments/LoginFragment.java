@@ -1,8 +1,6 @@
 package com.thinkmobiles.mysmallcommunity.ui.fragments;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -14,11 +12,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
@@ -27,14 +27,13 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.thinkmobiles.mysmallcommunity.base.BaseFragment;
 import com.thinkmobiles.mysmallcommunity.interfaces.Saveiface;
+import com.thinkmobiles.mysmallcommunity.managers.FacebookSocialClient;
 import com.thinkmobiles.mysmallcommunity.managers.ParseManager;
-import com.thinkmobiles.mysmallcommunity.managers.Preferences;
 import com.thinkmobiles.mysmallcommunity.models.User;
 import com.thinkmobiles.mysmallcommunity.ui.activities.MainActivity;
 import com.thinkmobiles.mysmallcommunity.ui.activities.RegistrationStepsActivity;
 import com.thinkmobiles.mysmallcommunity.R;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -43,6 +42,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Arrays;
 
 
 /**
@@ -54,6 +54,10 @@ public class LoginFragment extends BaseFragment implements Saveiface {
     private ParseManager mManager;
     private User mUser;
 
+    private Button btnFacebook;
+    private CallbackManager mCallbackManager;
+
+    private FacebookSocialClient mFacebookSocialClient;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,64 +74,28 @@ public class LoginFragment extends BaseFragment implements Saveiface {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
         findUI();
-        setLoginButton();
 
         return view;
     }
 
     private void findUI(){
-        loginButton           = $(R.id.login_button);
-    }
-
-    private void setLoginButton(){
-        loginButton.setReadPermissions("public_profile, email");
-        loginButton.setFragment(this);
-
-        callbackManager = CallbackManager.Factory.create();
-
-        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+//        loginButton           = $(R.id.login_button);
+        btnFacebook           = $(R.id.btnFacebook);
+        btnFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSuccess(final LoginResult loginResult) {
-                final GraphRequest request = GraphRequest.newMeRequest(
-                        loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-                            @Override
-                            public void onCompleted(JSONObject jsonObject, GraphResponse graphResponse) {
-                                String name = null;
-                                String[] names = null;
-                                try{
-                                    name = jsonObject.getString("name");
-                                    names = name.split(" ");
-
-                                    mUser.setUserFbId(jsonObject.getString("id"));
-                                    mUser.setFirstName(names[0]);
-                                    mUser.setLastName(names[1]);
-                                    mUser.setEmail(jsonObject.getString("email"));
-
-                                    getImageUrl(loginResult.getAccessToken());
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                                mManager.isUserRegister(mUser.getUserFbId());
-                            }
-                        }
-                );
-
-                Bundle parameters = new Bundle();
-                parameters.putString("fields", "name, birthday, email");
-                request.setParameters(parameters);
-                request.executeAsync();
-
-            }
-
-            @Override
-            public void onCancel() {
-                Log.d("DENYSYUK", "onCancel");
-            }
-
-            @Override
-            public void onError(FacebookException error) {
+            public void onClick(View v) {
+                login();
             }
         });
+    }
+
+
+    private void setLoginButton(){
+//        loginButton.setReadPermissions("public_profile, email");
+//        loginButton.setFragment(this);
+
+
+
 
     }
 
@@ -194,6 +162,12 @@ public class LoginFragment extends BaseFragment implements Saveiface {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
+        Log.d("DENYSYUK", "Fragment onActivityResult");
+    }
+
+    public void login(){
+        LoginManager.getInstance().logInWithReadPermissions(mActivity,
+                Arrays.asList("public_profile", "user_friends"));
     }
 
     @Override

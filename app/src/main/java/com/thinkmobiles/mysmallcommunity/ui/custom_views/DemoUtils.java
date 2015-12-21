@@ -30,6 +30,12 @@ final class DemoUtils {
             } else if(qty == 7 && i>2) {
                 colSpan=1;
                 rowSpan = 1;
+            } else if(qty == 2 && i != 0) {
+                colSpan = 4;
+                rowSpan = 2;
+            } else if(qty == 6 && i>2){
+                colSpan = 2;
+                rowSpan = 1;
             } else {
                 colSpan = 2;
                 rowSpan = 1;

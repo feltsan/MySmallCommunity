@@ -56,11 +56,13 @@
             android:text="My first post in my small communiy"
             android:layout_margin="8dp"/>
 
-        <ImageView
-            android:id="@+id/ivPostImage_PLI"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"/>
+            <ImageView
+                android:id="@+id/ivPostImage_PLI"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"/>
+
+
 
         <RelativeLayout
             android:layout_width="match_parent"

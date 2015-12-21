@@ -20,7 +20,7 @@
     <string name="family">Family</string>
     <string name="single">Single</string>
 
-    <string name="welcome">Welcome</string>
+    <string name="welcome">Welcome to your small community!</string>
     <string name="login_text">Bla bla bla</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
@@ -42,6 +42,8 @@
     <string name="settings_item">Settings</string>
     <string name="notification_item">Notifications</string>
     <string name="logout_item">Log out</string>
+    <string name="button_get_started">Get Started</string>
+    <string name="button_sign_in">Sign in with facebook</string>
 
     <string name="settings">Settings</string>
     <string name="invite_from">From</string>

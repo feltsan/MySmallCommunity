@@ -1,8 +1,11 @@
 package com.thinkmobiles.mysmallcommunity.ui.custom_views;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -46,9 +49,9 @@ public class CustomGalleryPost extends BaseFragment {
 //        image7.setImageDrawable(getResources().getDrawable(R.drawable.terrance_photo));
 
         listView = (AsymmetricGridView) v.findViewById(R.id.listView);
-        listView.setRequestedColumnWidth(Utils.dpToPx(getContext(), 80));
+        listView.setRequestedColumnWidth(Utils.dpToPx(getContext(), 25));
         List<DemoItem> items = new ArrayList<>();
-        items = utils.moarItems(7);
+        items = utils.moarItems(1);
         adapter = new DefaultListAdapter(mActivity, items);
         AsymmetricGridViewAdapter asymmetricGridViewAdapter = new
                 AsymmetricGridViewAdapter(mActivity, listView, adapter);
